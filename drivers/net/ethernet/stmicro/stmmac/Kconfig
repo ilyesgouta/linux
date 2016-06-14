@@ -114,6 +114,17 @@ config DWMAC_SUNXI
 	  This selects Allwinner SoC glue layer support for the
 	  stmmac device driver. This driver is used for A20/A31
 	  GMAC ethernet controller.
+
+config DWMAC_STM32
+	tristate "STM32 dwmac support"
+	default ARCH_STM32
+	depends on OF
+	---help---
+	  Support for STM32 ethernet controllers.
+
+	  This selects STM32 SoC glue layer support for the
+	  stmmac device driver. This driver is used for STM32
+	  ethernet controller.
 endif
 
 config STMMAC_PCI
