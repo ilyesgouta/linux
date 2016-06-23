@@ -30,13 +30,25 @@
 #define DRIVER_NAME "stm32-usart"
 
 /* Register offsets */
+#ifdef CONFIG_MACH_STM32F746
+#define USART_SR		0x1c
+#define USART_BRR		0x0c
+#define USART_CR1		0x00
+#define USART_CR2		0x04
+#define USART_CR3		0x08
+#define USART_GTPR		0x10
+#define USART_RD_DR		0x24
+#define USART_TX_DR		0x28
+#else
 #define USART_SR		0x00
-#define USART_DR		0x04
 #define USART_BRR		0x08
 #define USART_CR1		0x0c
 #define USART_CR2		0x10
 #define USART_CR3		0x14
 #define USART_GTPR		0x18
+#define USART_RD_DR		0x04
+#define USART_TX_DR		0x04
+#endif
 
 /* USART_SR */
 #define USART_SR_PE		BIT(0)
@@ -63,7 +75,12 @@
 #define USART_BRR_DIV_M_SHIFT	4
 
 /* USART_CR1 */
+#ifdef CONFIG_MACH_STM32F746
+#define USART_CR1_UE		BIT(0)
+#else
 #define USART_CR1_SBK		BIT(0)
+#define USART_CR1_UE		BIT(13)
+#endif
 #define USART_CR1_RWU		BIT(1)
 #define USART_CR1_RE		BIT(2)
 #define USART_CR1_TE		BIT(3)
@@ -76,7 +93,6 @@
 #define USART_CR1_PCE		BIT(10)
 #define USART_CR1_WAKE		BIT(11)
 #define USART_CR1_M		BIT(12)
-#define USART_CR1_UE		BIT(13)
 #define USART_CR1_OVER8		BIT(15)
 #define USART_CR1_IE_MASK	GENMASK(8, 4)
 
@@ -160,7 +176,7 @@ static void stm32_receive_chars(struct uart_port *port)
 
 	while ((sr = readl_relaxed(port->membase + USART_SR)) & USART_SR_RXNE) {
 		sr |= USART_SR_DUMMY_RX;
-		c = readl_relaxed(port->membase + USART_DR);
+		c = readl_relaxed(port->membase + USART_RD_DR);
 		flag = TTY_NORMAL;
 		port->icount.rx++;
 
@@ -202,7 +218,7 @@ static void stm32_transmit_chars(struct uart_port *port)
 	struct circ_buf *xmit = &port->state->xmit;
 
 	if (port->x_char) {
-		writel_relaxed(port->x_char, port->membase + USART_DR);
+		writel_relaxed(port->x_char, port->membase + USART_TX_DR);
 		port->x_char = 0;
 		port->icount.tx++;
 		return;
@@ -218,7 +234,7 @@ static void stm32_transmit_chars(struct uart_port *port)
 		return;
 	}
 
-	writel_relaxed(xmit->buf[xmit->tail], port->membase + USART_DR);
+	writel_relaxed(xmit->buf[xmit->tail], port->membase + USART_TX_DR);
 	xmit->tail = (xmit->tail + 1) & (UART_XMIT_SIZE - 1);
 	port->icount.tx++;
 
@@ -611,7 +627,7 @@ static void stm32_console_putchar(struct uart_port *port, int ch)
 	while (!(readl_relaxed(port->membase + USART_SR) & USART_SR_TXE))
 		cpu_relax();
 
-	writel_relaxed(ch, port->membase + USART_DR);
+	writel_relaxed(ch, port->membase + USART_TX_DR);
 }
 
 static void stm32_console_write(struct console *co, const char *s, unsigned cnt)
@@ -647,7 +663,7 @@ static void stm32_console_write(struct console *co, const char *s, unsigned cnt)
 static int stm32_console_setup(struct console *co, char *options)
 {
 	struct stm32_port *stm32port;
-	int baud = 9600;
+	int baud = 115200;
 	int bits = 8;
 	int parity = 'n';
 	int flow = 'n';
