@@ -1302,6 +1302,20 @@ choice
 		  options; the platform specific options are deprecated
 		  and will be soon removed.
 
+	config DEBUG_LL_STM32_UART6
+		bool "Kernel low-level debugging via STM32 UART6"
+		depends on ARCH_STM32 && MACH_STM32F746
+		help
+		  Say Y here if you wish the debug print routes to direct
+		  their output to a stm32f746 UART6.  You can use
+		  this option to provide the parameters for the UART
+		  rather than selecting one of the platform specific
+		  options above if you know the parameters for the port.
+
+		  This option is preferred over the platform specific
+		  options; the platform specific options are deprecated
+		  and will be soon removed.
+
 endchoice
 
 config DEBUG_EXYNOS_UART
@@ -1416,6 +1430,7 @@ config DEBUG_LL_INCLUDE
 	default "debug/zynq.S" if DEBUG_ZYNQ_UART0 || DEBUG_ZYNQ_UART1
 	default "debug/bcm63xx.S" if DEBUG_BCM63XX_UART
 	default "debug/digicolor.S" if DEBUG_DIGICOLOR_UA0
+	default "debug/stm32f7.S" if DEBUG_LL_STM32_UART6
 	default "mach/debug-macro.S"
 
 # Compatibility options for PL01x
