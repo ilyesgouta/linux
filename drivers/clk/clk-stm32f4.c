@@ -245,7 +245,7 @@ static void stm32f4_rcc_register_pll(const char *hse_clk, const char *hsi_clk)
 	const char   *pllsrc = pllcfgr & BIT(22) ? hse_clk : hsi_clk;
 	unsigned long pllq   = (pllcfgr >> 24) & 0xf;
 
-	clk_register_fixed_factor(NULL, "vco", pllsrc, 0, plln, pllm);
+	clk_register_fixed_factor(NULL, "vco", pllsrc, CLK_IS_ROOT|CLK_GET_RATE_NOCACHE, plln, pllm);
 	clk_register_fixed_factor(NULL, "pll", "vco", 0, 1, pllp);
 	clk_register_fixed_factor(NULL, "pll48", "vco", 0, 1, pllq);
 }
@@ -321,7 +321,7 @@ static void __init stm32f4_rcc_init(struct device_node *np)
 
 	hse_clk = of_clk_get_parent_name(np, 0);
 
-	clk_register_fixed_rate_with_accuracy(NULL, "hsi", NULL, 0,
+	clk_register_fixed_rate_with_accuracy(NULL, "hsi", NULL, CLK_IS_ROOT|CLK_GET_RATE_NOCACHE,
 			16000000, 160000);
 	stm32f4_rcc_register_pll(hse_clk, "hsi");
 
@@ -347,7 +347,7 @@ static void __init stm32f4_rcc_init(struct device_node *np)
 			     CLK_SET_RATE_PARENT, 15);
 
 	clks[SYSTICK] = clk_register_fixed_factor(NULL, "systick", "ahb_div",
-						  0, 1, 8);
+						  CLK_GET_RATE_NOCACHE, 1, 8);
 	clks[FCLK] = clk_register_fixed_factor(NULL, "fclk", "ahb_div",
 					       0, 1, 1);
 
