@@ -94,3 +94,9 @@
 	pinctrl-names = "default";
 	status = "okay";
 };
+
+&ltdc {
+	pinctrl-0 = <&ltdc_pins_a>;
+	pinctrl-names = "default";
+	status = "okay";
+};

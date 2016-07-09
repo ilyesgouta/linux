@@ -352,6 +352,23 @@ config FB_SA1100
 	  If you plan to use the LCD display with your SA-1100 system, say
 	  Y here.
 
+config FB_LTDC
+	bool "STM32 LTDC Framebuffer support"
+	depends on (FB = y) && ARM && ARCH_STM32 && OF
+	select FB_CFB_FILLRECT
+	select FB_CFB_COPYAREA
+	select FB_CFB_IMAGEBLIT
+	select LCD_CLASS_DEVICE
+	select FB_MODE_HELPERS
+	select VIDEOMODE_HELPERS
+	help
+	  This is a framebuffer device for the LTDC Controller.
+	  See <http://www.linux-fbdev.org/> for information on framebuffer
+	  devices.
+
+	  If you plan to use the LCD display with your STM32 MCU, say
+	  Y here.
+
 config FB_IMX
 	tristate "Freescale i.MX1/21/25/27 LCD support"
 	depends on FB && ARCH_MXC
