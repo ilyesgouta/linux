@@ -279,13 +279,13 @@
 
 			usart1_pins_a: usart1@0 {
 				pins1 {
-                                        pinmux = <STM32F746_PA9_FUNC_USART1_TX>;
+					pinmux = <STM32F746_PA9_FUNC_USART1_TX>;
 					bias-disable;
 					drive-push-pull;
 					slew-rate = <0>;
 				};
 				pins2 {
-                                        pinmux = <STM32F746_PA10_FUNC_USART1_RX>;
+					pinmux = <STM32F746_PA10_FUNC_USART1_RX>;
 					bias-disable;
 				};
 			};
@@ -305,18 +305,18 @@
 
 			usbotg_hs_pins_a: usbotg_hs@0 {
 				pins {
-                                        pinmux = <STM32F746_PH4_FUNC_OTG_HS_ULPI_NXT>,
-                                                 <STM32F746_PI11_FUNC_OTG_HS_ULPI_DIR>,
-                                                 <STM32F746_PC0_FUNC_OTG_HS_ULPI_STP>,
-                                                 <STM32F746_PA5_FUNC_OTG_HS_ULPI_CK>,
-                                                 <STM32F746_PA3_FUNC_OTG_HS_ULPI_D0>,
-                                                 <STM32F746_PB0_FUNC_OTG_HS_ULPI_D1>,
-                                                 <STM32F746_PB1_FUNC_OTG_HS_ULPI_D2>,
-                                                 <STM32F746_PB10_FUNC_OTG_HS_ULPI_D3>,
-                                                 <STM32F746_PB11_FUNC_OTG_HS_ULPI_D4>,
-                                                 <STM32F746_PB12_FUNC_OTG_HS_ULPI_D5>,
-                                                 <STM32F746_PB13_FUNC_OTG_HS_ULPI_D6>,
-                                                 <STM32F746_PB5_FUNC_OTG_HS_ULPI_D7>;
+					pinmux = <STM32F746_PH4_FUNC_OTG_HS_ULPI_NXT>,
+							 <STM32F746_PI11_FUNC_OTG_HS_ULPI_DIR>,
+							 <STM32F746_PC0_FUNC_OTG_HS_ULPI_STP>,
+							 <STM32F746_PA5_FUNC_OTG_HS_ULPI_CK>,
+							 <STM32F746_PA3_FUNC_OTG_HS_ULPI_D0>,
+							 <STM32F746_PB0_FUNC_OTG_HS_ULPI_D1>,
+							 <STM32F746_PB1_FUNC_OTG_HS_ULPI_D2>,
+							 <STM32F746_PB10_FUNC_OTG_HS_ULPI_D3>,
+							 <STM32F746_PB11_FUNC_OTG_HS_ULPI_D4>,
+							 <STM32F746_PB12_FUNC_OTG_HS_ULPI_D5>,
+							 <STM32F746_PB13_FUNC_OTG_HS_ULPI_D6>,
+							 <STM32F746_PB5_FUNC_OTG_HS_ULPI_D7>;
 					bias-disable;
 					drive-push-pull;
 					slew-rate = <2>;
@@ -325,16 +325,20 @@
 
 			ethernet_mii: mii@0 {
 				pins {
-                                        pinmux = <STM32F746_PG13_FUNC_ETH_MII_TXD0_ETH_RMII_TXD0>,
-                                                 <STM32F746_PG14_FUNC_ETH_MII_TXD1_ETH_RMII_TXD1>,
-                                                 <STM32F746_PG11_FUNC_ETH_MII_TX_EN_ETH_RMII_TX_EN>,
-                                                 <STM32F746_PA2_FUNC_ETH_MDIO>,
-                                                 <STM32F746_PC1_FUNC_ETH_MDC>,
-                                                 <STM32F746_PA1_FUNC_ETH_MII_RX_CLK_ETH_RMII_REF_CLK>,
-                                                 <STM32F746_PA7_FUNC_ETH_MII_RX_DV_ETH_RMII_CRS_DV>,
-                                                 <STM32F746_PC4_FUNC_ETH_MII_RXD0_ETH_RMII_RXD0>,
-                                                 <STM32F746_PC5_FUNC_ETH_MII_RXD1_ETH_RMII_RXD1>,
-                                                 <STM32F746_PB5_FUNC_ETH_PPS_OUT>;
+					pinmux = <STM32F746_PG13_FUNC_ETH_MII_TXD0_ETH_RMII_TXD0>,
+							 <STM32F746_PG14_FUNC_ETH_MII_TXD1_ETH_RMII_TXD1>,
+							 <STM32F746_PG11_FUNC_ETH_MII_TX_EN_ETH_RMII_TX_EN>,
+							 <STM32F746_PA2_FUNC_ETH_MDIO>,
+							 <STM32F746_PC1_FUNC_ETH_MDC>,
+							 <STM32F746_PA1_FUNC_ETH_MII_RX_CLK_ETH_RMII_REF_CLK>,
+							 <STM32F746_PA7_FUNC_ETH_MII_RX_DV_ETH_RMII_CRS_DV>,
+							 <STM32F746_PC4_FUNC_ETH_MII_RXD0_ETH_RMII_RXD0>,
+							 <STM32F746_PC5_FUNC_ETH_MII_RXD1_ETH_RMII_RXD1>,
+							 <STM32F746_PB5_FUNC_ETH_PPS_OUT>;
+					slew-rate = <2>;
+				};
+			};
+
 			ltdc_pins_a: clcd@0 {
 				pins {
 					pinmux = <STM32F746_PH4_FUNC_OTG_HS_ULPI_NXT>,
